@@ -13,6 +13,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+
     <v-toolbar dark class="primary">
       <v-toolbar-side-icon
         @click.stop="sideNav = !sideNav"
