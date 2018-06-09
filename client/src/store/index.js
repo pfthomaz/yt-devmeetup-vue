@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -24,14 +25,14 @@ export const store = new Vuex.Store({
       // { imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/47/New_york_times_square-terabass.jpg', id: 'afajfjadfaadfa323', title: 'Meetup in New York' },
       // { imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Paris_-_Blick_vom_gro%C3%9Fen_Triumphbogen.jpg', id: 'aadsfhbkhlk1241', title: 'Meetup in Paris' }
     ],
-    user: {
-      id: 'awsdawofa1234',
-      registeredMeetups: ['afajfjadfaadfa323']
-    }
+    user: null
   },
   mutations: {
     createMeetup (state, payload) {
       state.loadedMeetups.push(payload);
+    },
+    setUser (state, payload) {
+      state.user = payload;
     }
   },
   actions: {
@@ -46,6 +47,40 @@ export const store = new Vuex.Store({
       };
       // reach out to  firebase and store it
       commit('createMeetup', meetup);
+    },
+    signUserUp ({commit}, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            const newUser = {
+              id: user.user.uid,
+              registeredMeetups: []
+            };
+            commit('setUser', newUser);
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        );
+    },
+    signUserIn ({commit}, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          const newUser = {
+            id: user.user.uid,
+            registeredMeetups: []
+          };
+          commit('setUser', newUser);
+        }
+      )
+      .catch(
+        error => {
+          console.log(error);
+        }
+      );
     }
   },
   getters: {
@@ -59,11 +94,13 @@ export const store = new Vuex.Store({
     },
     loadedMeetup (state) {
       return (meetupId) => {
-        console.log('meetupId is ' + meetupId + ' and of type ' + typeof (meetupId));
         return state.loadedMeetups.find((meetup) => {
           return meetup.id === meetupId;
         });
       };
+    },
+    user (state) {
+      return state.user;
     }
   }
 });
