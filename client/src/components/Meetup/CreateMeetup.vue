@@ -60,12 +60,32 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
+              <h4>Choose a Date & Time</h4>
+            </v-flex>
+          </v-layout>
+          <v-layout row class="mb-2">
+            <v-flex xs12 sm6 offset-sm3>
+              <v-date-picker
+                v-model="date">
+              </v-date-picker>
+              <p>{{ date }}</p>
+            </v-flex>
+          </v-layout>
+          <v-layout row class="mb-2">
+            <v-flex xs12 sm6 offset-sm3>
+              <v-time-picker v-model="time" format="24hr"></v-time-picker>
+              <p>{{ time }}</p>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
               <v-btn
                 class="primary"
                 :disabled="!formIsValid"
                 type="submit">
                 Create Meetup
               </v-btn>
+              <!-- {{ submittableDateTime }} -->
             </v-flex>
           </v-layout>
         </form>
@@ -75,14 +95,23 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   data () {
     return {
       title: '',
       location: '',
       imageUrl: '',
-      description: ''
+      description: '',
+      date: new Date(),
+      time: new Date()
     };
+  },
+  created: function () {
+    const dateTime = moment();
+    this.date = dateTime.format('YYYY-MM-DD');
+    this.time = dateTime.format('HH:mm');
   },
   computed: {
     formIsValid () {
@@ -91,6 +120,37 @@ export default {
         this.imageUrl !== '' &&
         this.description !== '';
     }
+    // submittableDateTime () {
+    //   const date = new Date(this.date);
+    //   if (typeof this.time === 'string') {
+    //     const hours = this.time.match(/^(\d+)/)[1];
+    //     const minutes = this.time.match(/:(\d+)/)[1];
+    //     date.setHours(hours);
+    //     date.setMinutes(minutes);
+    //   } else {
+    //     date.setHours(this.time.getHours());
+    //     date.setMinutes(this.time.getMinutes());
+    //   }
+    //   return date;
+    // }
+    // submittableDateTime () {
+    //   const date = new Date(this.date);
+    //   console.log('First date ', date);
+    //   console.log('typeof this.time ', typeof this.time);
+    //   if (typeof this.time === 'string') {
+    //     const hours = this.time.match(/^(\d+)/)[1];
+    //     console.log('Hours', hours);
+    //     const minutes = this.time.match(/:(\d+)/)[1];
+    //     console.log('Minutes ', minutes);
+    //     date.setHours(hours);
+    //     date.setMinutes(minutes);
+    //   } else {
+    //     date.setHours(this.time.getHours());
+    //     date.setMinutes(this.time.getMinutes());
+    //   }
+    //   console.log('Last date ', date);
+    //   return date;
+    // }
   },
   methods: {
     onCreateMeetup () {
@@ -102,7 +162,7 @@ export default {
         location: this.location,
         imageUrl: this.imageUrl,
         description: this.description,
-        date: new Date()
+        date: this.date
       };
       this.$store.dispatch('createMeetup', meetupData);
       this.$router.push('/meetups');
@@ -112,5 +172,4 @@ export default {
 </script>
 
 <style>
-
 </style>
