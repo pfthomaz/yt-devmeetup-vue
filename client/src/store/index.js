@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
       imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/800px-New_york_times_square-terabass.jpg',
       id: 'afajfjadfaadfa323',
       title: 'Meetup in New York',
-      date: '2018-07-17',
+      date: new Date(),
       location: 'New York',
       description: 'Awesome!'
     },
@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
       imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Paris_-_Blick_vom_gro%C3%9Fen_Triumphbogen.jpg/800px-Paris_-_Blick_vom_gro%C3%9Fen_Triumphbogen.jpg',
       id: 'aadsfhbkhlk1241',
       title: 'Meetup in Paris',
-      date: '2018-07-18',
+      date: new Date(),
       location: 'Paris',
       description: 'Voila!'
     }
