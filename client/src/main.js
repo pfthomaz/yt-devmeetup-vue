@@ -42,5 +42,6 @@ new Vue({
       projectId: 'devmeetup-e168d',
       storageBucket: 'devmeetup-e168d.appspot.com'
     });
+    this.$store.dispatch('loadMeetups');
   }
 });
