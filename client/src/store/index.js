@@ -35,6 +35,20 @@ export const store = new Vuex.Store({
     createMeetup (state, payload) {
       state.loadedMeetups.push(payload);
     },
+    updateMeetup (state, payload) {
+      const updatedMeetup = state.loadedMeetups.find((meetup) => {
+        return meetup.id === payload.id;
+      });
+      if (payload.title) {
+        updatedMeetup.title = payload.title;
+      }
+      if (payload.description) {
+        updatedMeetup.description = payload.description;
+      }
+      if (payload.date) {
+        updatedMeetup.date = payload.date;
+      }
+    },
     setUser (state, payload) {
       state.user = payload;
     },
@@ -99,13 +113,6 @@ export const store = new Vuex.Store({
           const ext = filename.slice(filename.lastIndexOf('.'));
           return firebase.storage().ref('meetups/' + key + ext).put(payload.image);
         })
-        // .then((fileData) => {
-        //   // imageUrl = fileData.metadata.downloadURLs[0];
-        //   console.log('FileData is: ', fileData);
-        //   imageUrl = fileData.ref.getDownloadURL();
-        //   console.log('imageUrl is: ', imageUrl);
-        //   return firebase.database().ref('meetups').child(key).update({imageUrl: imageUrl});
-        // })
         .then(fileData => {
           console.log('fileData is: ', fileData);
           return fileData.ref.getDownloadURL();
@@ -124,6 +131,28 @@ export const store = new Vuex.Store({
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+    updateMeetupData ({commit}, payload) {
+      commit('setLoading', true);
+      const updateObj = {};
+      if (payload.title) {
+        updateObj.title = payload.title;
+      }
+      if (payload.description) {
+        updateObj.description = payload.description;
+      }
+      if (payload.date) {
+        updateObj.date = payload.date;
+      }
+      firebase.database().ref('meetup').child(payload.id).update(updateObj)
+        .then(() => {
+          commit('setLoading', false);
+          commit('updateMeetup', payload);
+        })
+        .catch(error => {
+          console.log(error);
+          commit('setLoading', false);
         });
     },
     signUserUp ({commit}, payload) {
@@ -188,7 +217,7 @@ export const store = new Vuex.Store({
       });
     },
     featuredMeetups (state, getters) {
-      return getters.loadedMeetups.slice(0, 5);
+      return getters.loadedMeetups.slice(0, 6);
     },
     loadedMeetup (state) {
       return (meetupId) => {
