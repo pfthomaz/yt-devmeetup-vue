@@ -40,7 +40,7 @@ new Vue({
       authDomain: 'devmeetup-e168d.firebaseapp.com',
       databaseURL: 'https://devmeetup-e168d.firebaseio.com',
       projectId: 'devmeetup-e168d',
-      storageBucket: 'devmeetup-e168d.appspot.com'
+      storageBucket: 'gs://devmeetup-e168d.appspot.com/'
     });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
