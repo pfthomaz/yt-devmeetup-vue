@@ -66,14 +66,19 @@
           <v-layout row class="mb-2">
             <v-flex xs12 sm6 offset-sm3>
               <v-date-picker
-                v-model="date">
+                v-model="date"
+                color="primary">
               </v-date-picker>
               <p>{{ date }}</p>
             </v-flex>
           </v-layout>
           <v-layout row class="mb-2">
             <v-flex xs12 sm6 offset-sm3>
-              <v-time-picker v-model="time" format="24hr"></v-time-picker>
+              <v-time-picker
+                v-model="time"
+                format="24hr"
+                color="primary">
+              </v-time-picker>
               <p>{{ time }}</p>
             </v-flex>
           </v-layout>
@@ -94,8 +99,6 @@
 </template>
 
 <script>
-// import moment from 'moment';
-
 export default {
   data () {
     return {
@@ -103,17 +106,11 @@ export default {
       location: '',
       imageUrl: '',
       description: '',
-      // date: new Date(),
-      date: '',
-      time: new Date(),
+      date: new Date().toISOString().substr(0, 10),
+      time: new Date().toTimeString().substr(0, 8),
       image: null
     };
   },
-  // created: function () {
-  //   const dateTime = moment();
-  //   this.date = dateTime.format('YYYY-MM-DD');
-  //   this.time = dateTime.format('HH:mm');
-  // },
   computed: {
     formIsValid () {
       return this.title !== '' &&
