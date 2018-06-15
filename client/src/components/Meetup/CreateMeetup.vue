@@ -69,7 +69,6 @@
                 v-model="date"
                 color="primary">
               </v-date-picker>
-              <!-- <p>{{ date }}</p> -->
             </v-flex>
             <!-- <v-spacer></v-spacer> -->
           <!-- </v-layout>
@@ -80,11 +79,10 @@
                 format="24hr"
                 color="primary">
               </v-time-picker>
-              <!-- <p>{{ time }}</p> -->
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 align-content-center>
+            <v-flex xs12 sm8 offset-sm2>
               <v-btn
                 class="primary"
                 :disabled="!formIsValid"
