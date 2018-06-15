@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
+      <v-flex xs12 sm8 offset-sm2>
         <h2>Create a new Meetup</h2>
       </v-flex>
     </v-layout>
@@ -9,7 +9,7 @@
       <v-flex xs12>
         <form @submit.prevent="onCreateMeetup">
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <v-text-field
                 name="title"
                 label="Title"
@@ -20,7 +20,7 @@
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <v-text-field
                 name="location"
                 label="Location"
@@ -31,7 +31,7 @@
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
               <input
                 type="file"
@@ -42,12 +42,12 @@
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <img :src="imageUrl" height=384>
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <v-text-field
                 name="description"
                 label="Description"
@@ -59,31 +59,32 @@
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm8 offset-sm2>
               <h4>Choose a Date & Time</h4>
             </v-flex>
           </v-layout>
           <v-layout row class="mb-2">
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs6 sm8 offset-sm2>
               <v-date-picker
                 v-model="date"
                 color="primary">
               </v-date-picker>
-              <p>{{ date }}</p>
+              <!-- <p>{{ date }}</p> -->
             </v-flex>
-          </v-layout>
-          <v-layout row class="mb-2">
-            <v-flex xs12 sm6 offset-sm3>
+            <!-- <v-spacer></v-spacer> -->
+          <!-- </v-layout>
+          <v-layout class="mb-2"> -->
+            <v-flex xs6 sm8>
               <v-time-picker
                 v-model="time"
                 format="24hr"
                 color="primary">
               </v-time-picker>
-              <p>{{ time }}</p>
+              <!-- <p>{{ time }}</p> -->
             </v-flex>
           </v-layout>
           <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 align-content-center>
               <v-btn
                 class="primary"
                 :disabled="!formIsValid"
